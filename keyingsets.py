@@ -1,3 +1,15 @@
+bl_info = {
+	"name": "Create KeyingSet from Selection",
+	"author": "Julien Duroure",
+	"version": (0, 0, 1),
+	"blender": (2, 77, 0),
+	"location": "3D View > Tools > KeyingSet",
+	"warning": "Alpha version",
+	"description": "Create KeyingSet from bone selection",
+	#"wiki_url": "",
+	#"tracker_url": ""
+	"category": "Animation"}
+
 import bpy
 
 class POSE_PT_juks_keying(bpy.types.Panel):
@@ -79,39 +91,39 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 
 			if self.rotation == True:
 				if bone.rotation_mode == "QUATERNION":
-                    if bone.lock_rotation_w == False and bone.lock_rotation[0] == False and bone.lock_rotation[1] == False and bone.lock_rotation[2] == False:
-					    ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=-1)
-                    else:
-                        if bone.lock_rotation_w == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=0)
-                        if bone.lock_rotation[0] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=1)
-                        if bone.lock_rotation[1] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=2)
-                        if bone.lock_rotation[2] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=3)
+					if bone.lock_rotation_w == False and bone.lock_rotation[0] == False and bone.lock_rotation[1] == False and bone.lock_rotation[2] == False:
+						ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=-1)
+					else:
+						if bone.lock_rotation_w == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=0)
+						if bone.lock_rotation[0] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=1)
+						if bone.lock_rotation[1] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=2)
+						if bone.lock_rotation[2] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_quaternion', index=3)
 				elif bone.rotation_mode == "AXIS_ANGLE":
-                    if bone.lock_rotation_w == False and bone.lock_rotation[0] == False and bone.lock_rotation[1] == False and bone.lock_rotation[2] == False:
-					    ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=-1)
-                    else:
-                        if bone.lock_rotation_w == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=0)
-                        if bone.lock_rotation[0] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=1)
-                        if bone.lock_rotation[1] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=2)
-                        if bone.lock_rotation[2] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=3)
+					if bone.lock_rotation_w == False and bone.lock_rotation[0] == False and bone.lock_rotation[1] == False and bone.lock_rotation[2] == False:
+						ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=-1)
+					else:
+						if bone.lock_rotation_w == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=0)
+						if bone.lock_rotation[0] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=1)
+						if bone.lock_rotation[1] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=2)
+						if bone.lock_rotation[2] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_angle', index=3)
 				else:
 					if bone.lock_rotation[0] == False and bone.lock_rotation[1] == False and bone.lock_rotation[2] == False:
-					    ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=-1)
-                    else:
-                        if bone.lock_rotation[0] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=0)
-                        if bone.lock_rotation[1] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=1)
-                        if bone.lock_rotation[2] == False:
-                            ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=2)
+						ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=-1)
+					else:
+						if bone.lock_rotation[0] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=0)
+						if bone.lock_rotation[1] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=1)
+						if bone.lock_rotation[2] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=2)
 			if self.scale == True:
 				ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.scale', index=-1)
 			if self.custom_props == True:
