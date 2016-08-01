@@ -136,5 +136,9 @@ def register():
 	bpy.utils.register_class(POSE_OT_juks_keying_from_selected)
 	bpy.utils.register_class(POSE_PT_juks_keying)
 
+def unregister():
+	bpy.utils.unregister_class(POSE_OT_juks_keying_from_selected)
+	bpy.utils.unregister_class(POSE_PT_juks_keying)
+
 if __name__ == "__main__":
 	register()
