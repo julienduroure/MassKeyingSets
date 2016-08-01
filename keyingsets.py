@@ -3,7 +3,7 @@ bl_info = {
 	"author": "Julien Duroure",
 	"version": (0, 0, 1),
 	"blender": (2, 77, 0),
-	"location": "3D View > Tools > KeyingSet",
+	"location": "Scene properties",
 	"warning": "Alpha version",
 	"description": "Create KeyingSet from bone selection",
 	#"wiki_url": "",
@@ -13,16 +13,15 @@ bl_info = {
 import bpy
 
 class POSE_PT_juks_keying(bpy.types.Panel):
-	bl_label = "KeyingSets"
-	bl_space_type = 'VIEW_3D'
-	bl_region_type = 'TOOLS'
-	bl_category = "KeyingSets"
+	bl_label = "KeyingSets from Selection"
+	bl_space_type = 'PROPERTIES'
+	bl_region_type = 'WINDOW'
+	bl_context = "scene"
 
 	@classmethod
 	def poll(self, context):
-		armature = context.object
-		return (context.object and
-				context.object.type == 'ARMATURE' and
+		return (len(context.selected_objects) == 1 and
+				context.selected_objects[0].type == 'ARMATURE' and
 				context.mode == 'POSE')
 
 	def draw(self, context):
@@ -46,8 +45,8 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 
 	@classmethod
 	def poll(self, context):
-		return (context.object and
-				context.object.type == 'ARMATURE' and
+		return (len(context.selected_objects) == 1 and
+				context.selected_objects[0].type == 'ARMATURE' and
 				context.mode == 'POSE')
 
 	def invoke(self, context, event):
