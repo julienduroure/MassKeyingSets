@@ -53,7 +53,7 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 	location = bpy.props.BoolProperty(default=True)
 	rotation = bpy.props.BoolProperty(default=True)
 	scale    = bpy.props.BoolProperty(default=False)
-	custom_props = bpy.props.BoolProperty(name="Custom Properties", default=False)
+	bone_custom_props = bpy.props.BoolProperty(name="Bone Custom Properties", default=False)
 	only_non_locked = bpy.props.BoolProperty(name="Do not key locked channels", default=True)
 
 	@classmethod
@@ -73,7 +73,7 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 		row.prop(self, "rotation")
 		row.prop(self, "scale")
 		row = layout.row()
-		row.prop(self, "custom_props")
+		row.prop(self, "bone_custom_props")
 		row = layout.row()
 		row.prop(self, "only_non_locked")
 
@@ -137,7 +137,7 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 								ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=2)
 				if self.scale == True:
 					ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.scale', index=-1)
-				if self.custom_props == True:
+				if self.bone_custom_props == True:
 					for prop in bone.keys():
 						if prop != "_RNA_UI":
 							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + "[\""+ prop  + "\"]", index=-1)
