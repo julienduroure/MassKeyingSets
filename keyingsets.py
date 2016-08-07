@@ -1,10 +1,10 @@
 bl_info = {
 	"name": "Create KeyingSet from Selection",
 	"author": "Julien Duroure",
-	"version": (0, 0, 1),
+	"version": (0, 0, 2),
 	"blender": (2, 77, 0),
 	"location": "Scene properties",
-	"warning": "Alpha version",
+	"warning": "Beta version",
 	"description": "Create KeyingSet from selection",
 	#"wiki_url": "",
 	#"tracker_url": ""
