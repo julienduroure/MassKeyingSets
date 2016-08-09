@@ -30,7 +30,7 @@ bl_info = {
 	"warning": "Beta version",
 	"description": "Mass KeyingSets",
 	"wiki_url": "http://blerifa.com/tools/MassKeyingSets/",
-	#"tracker_url": ""
+	"tracker_url": "https://github.com/julienduroure/MassKeyingSets/issues/"
 	"category": "Animation"}
 
 import bpy
