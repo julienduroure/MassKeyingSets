@@ -22,15 +22,15 @@
 ##########################################################################################
 
 bl_info = {
-	"name": "Create KeyingSet from Selection",
+	"name": "Mass KeyingSets",
 	"author": "Julien Duroure",
 	"version": (0, 0, 2),
 	"blender": (2, 77, 0),
 	"location": "Scene properties",
 	"warning": "Beta version",
-	"description": "Mass KeyingSets",
+	"description": "Mass KeyingSets creation from Selection",
 	"wiki_url": "http://blerifa.com/tools/MassKeyingSets/",
-	"tracker_url": "https://github.com/julienduroure/MassKeyingSets/issues/"
+	"tracker_url": "https://github.com/julienduroure/MassKeyingSets/issues/",
 	"category": "Animation"}
 
 import bpy
