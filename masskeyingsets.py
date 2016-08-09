@@ -29,7 +29,7 @@ bl_info = {
 	"location": "Scene properties",
 	"warning": "Beta version",
 	"description": "Mass KeyingSets",
-	#"wiki_url": "",
+	"wiki_url": "http://blerifa.com/tools/MassKeyingSets/",
 	#"tracker_url": ""
 	"category": "Animation"}
 
