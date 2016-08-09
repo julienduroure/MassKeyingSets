@@ -14,7 +14,7 @@ import bpy
 
 def check_case(context):
 	#Armature in pose mode
-	if len(context.selected_objects) == 1 and context.selected_objects[0].type == 'ARMATURE' and context.mode == 'POSE':
+	if len(context.selected_objects) == 1 and context.selected_objects[0].type == 'ARMATURE' and context.mode == 'POSE' and len(context.selected_pose_bones) != 0:
 		return True, 'BONES'
 	elif len(context.selected_objects) != 0 and context.mode == 'OBJECT':
 		# Objects
