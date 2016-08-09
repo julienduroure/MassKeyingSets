@@ -62,7 +62,7 @@ class POSE_PT_juks_keying(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
-		layout.operator("pose.juks_keying", text="Create KeyingSet from selected")
+		layout.operator("pose.juks_keying", text="Mass KeyingSets creation")
 
 class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 	"""Create/Update KeyingSet from selected"""
