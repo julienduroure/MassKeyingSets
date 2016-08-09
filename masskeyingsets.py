@@ -24,7 +24,7 @@
 bl_info = {
 	"name": "Mass KeyingSets",
 	"author": "Julien Duroure",
-	"version": (0, 0, 2),
+	"version": (0, 1, 0),
 	"blender": (2, 77, 0),
 	"location": "Scene properties",
 	"warning": "Beta version",
