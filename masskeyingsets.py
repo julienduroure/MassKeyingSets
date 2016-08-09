@@ -51,7 +51,7 @@ def check_case(context):
 	return False, 'DUMMY'
 
 class POSE_PT_juks_keying(bpy.types.Panel):
-	bl_label = "KeyingSets from Selection"
+	bl_label = "Mass KeyingSets creation"
 	bl_space_type = 'PROPERTIES'
 	bl_region_type = 'WINDOW'
 	bl_context = "scene"
