@@ -67,10 +67,10 @@ class POSE_PT_juks_keying(bpy.types.Panel):
 class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 	"""Create/Update KeyingSet from selected"""
 	bl_idname = "pose.juks_keying"
-	bl_label = "Keying from selected"
+	bl_label = "MassKeyingSets"
 	bl_options = {'REGISTER'}
 
-	name = bpy.props.StringProperty(name="",default="KeyingSet from Selection")
+	name = bpy.props.StringProperty(name="",default="MassKeyingSets")
 
 	# update   = bpy.props.BoolProperty(default=False) #TODO
 	location = bpy.props.BoolProperty(default=True)
