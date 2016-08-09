@@ -5,7 +5,7 @@ bl_info = {
 	"blender": (2, 77, 0),
 	"location": "Scene properties",
 	"warning": "Beta version",
-	"description": "Create KeyingSet from selection",
+	"description": "Mass KeyingSets",
 	#"wiki_url": "",
 	#"tracker_url": ""
 	"category": "Animation"}
