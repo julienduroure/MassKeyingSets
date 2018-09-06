@@ -81,7 +81,8 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 
 	@classmethod
 	def poll(self, context):
-		return check_case(context)[0]
+		return check_case(context)[0] == True and check_case(context)[1] == "BONES"
+		#TODO: remove last check when OBJ will be implemented
 
 
 	def execute(self, context):
