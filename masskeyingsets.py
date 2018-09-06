@@ -65,7 +65,69 @@ class POSE_PT_juks_keying(bpy.types.Panel):
 
 	def draw(self, context):
 		layout = self.layout
-		layout.operator("pose.juks_keying", text="Mass KeyingSets creation")
+		row = layout.row()
+		row.operator("pose.juks_keying", text="Mass KeyingSets creation")
+		row = layout.row()
+		row.operator("pose.juks_keying_keyframes", "Mass KeyingSets from Keyframes")
+
+class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
+	"""Create/Update KeyingSet from existing keyframes"""
+	bl_idname = "pose.juks_keying_keyframes"
+	bl_label = "MassKeyingSets from Keyframes"
+	bl_options = {'REGISTER'}
+
+	name = bpy.props.StringProperty(name="",default="MassKeyingSets")
+	update   = bpy.props.BoolProperty(default=False)
+
+	@classmethod
+	def poll(self, context):
+		return check_case(context)[0]
+
+
+	def execute(self, context):
+		if check_case(context)[1] == "BONES":
+			#TODO: implement index of transformation if not all keyed
+			scene = bpy.context.scene
+
+			if self.update == False:
+				ks = scene.keying_sets.new(idname="KeyingSet", name=self.name)
+				ks.bl_description = ""
+			else:
+				if self.name not in scene.keying_sets.keys():
+					self.report({'WARNING'}, "KeyingSet not exists!")
+					return {'CANCELLED'}
+				ks = scene.keying_sets[self.name]
+
+			if not bpy.context.active_object.animation_data:
+				return {'FINISHED'}
+			if not context.active_object.animation_data.action:
+				return {'FINISHED'}
+			curves = context.active_object.animation_data.action.fcurves
+
+			already_dones = {}
+			for curve in curves:
+				if not curve.data_path[:11] == "pose.bones[":
+					continue
+				bone_name = curve.data_path.split("\"")[1]
+				if not bone_name in [bone.name for bone in context.active_object.pose.bones]:
+					continue
+				transformation = curve.data_path.split(".")[len(curve.data_path.split("."))-1]
+
+				if transformation == "location":
+					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.location', index=-1)
+				elif transformation == "rotation_quaternion":
+					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_quaternion', index=-1)
+				elif transformation == "rotation_angle":
+					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_angle', index=-1)
+				elif transformation == "rotation_euler":
+					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_euler', index=-1)
+
+				# TODO custom props
+		elif check_case(context)[1] == "OBJ":
+			pass #TODO
+
+		return {'FINISHED'}
+
 
 class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 	"""Create/Update KeyingSet from selected"""
@@ -259,10 +321,12 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 
 def register():
 	bpy.utils.register_class(POSE_OT_juks_keying_from_selected)
+	bpy.utils.register_class(POSE_OT_juks_keying_from_keyframes)
 	bpy.utils.register_class(POSE_PT_juks_keying)
 
 def unregister():
 	bpy.utils.unregister_class(POSE_OT_juks_keying_from_selected)
+	bpy.utils.unregister_class(POSE_OT_juks_keying_from_keyframes)
 	bpy.utils.unregister_class(POSE_PT_juks_keying)
 
 if __name__ == "__main__":
