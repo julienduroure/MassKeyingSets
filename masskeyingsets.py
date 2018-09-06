@@ -121,6 +121,9 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 				ks = scene.keying_sets.new(idname="KeyingSet", name=self.name)
 				ks.bl_description = ""
 			else:
+				if self.name not in scene.keying_sets.keys():
+					self.report({'WARNING'}, "KeyingSet not exists!")
+					return {'CANCELLED'}
 				ks = scene.keying_sets[self.name]
 
 			for bone in bones:
