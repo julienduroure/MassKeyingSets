@@ -248,8 +248,15 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 
 		elif check_case(context)[1] == "OBJ":
 			scene = context.scene
-			ks = scene.keying_sets.new(idname="KeyingSet", name=self.name)
-			ks.bl_description = ""
+
+			if self.update == False:
+				ks = scene.keying_sets.new(idname="KeyingSet", name=self.name)
+				ks.bl_description = ""
+			else:
+				if self.name not in scene.keying_sets.keys():
+					self.report({'WARNING'}, "KeyingSet not exists!")
+					return {'CANCELLED'}
+				ks = scene.keying_sets[self.name]
 
 			armature_found = False
 			for obj in context.selected_objects:
