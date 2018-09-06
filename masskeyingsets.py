@@ -75,7 +75,7 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 
 	name = bpy.props.StringProperty(name="",default="MassKeyingSets")
 
-	# update   = bpy.props.BoolProperty(default=False) #TODO
+	update   = bpy.props.BoolProperty(default=False)
 	location = bpy.props.BoolProperty(default=True)
 	rotation = bpy.props.BoolProperty(default=True)
 	scale    = bpy.props.BoolProperty(default=False)
@@ -94,6 +94,8 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 
 	def draw(self, context):
 		layout = self.layout
+		row = layout.row()
+		row.prop(self, "update", text="Update KeyingSet if already exists")
 		row = layout.row()
 		row.prop(self, "name")
 		row = layout.row()
@@ -115,8 +117,11 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 			bones = context.selected_pose_bones
 			scene = bpy.context.scene
 
-			ks = scene.keying_sets.new(idname="KeyingSet", name=self.name)
-			ks.bl_description = ""
+			if self.update == False:
+				ks = scene.keying_sets.new(idname="KeyingSet", name=self.name)
+				ks.bl_description = ""
+			else:
+				ks = scene.keying_sets[self.name]
 
 			for bone in bones:
 				if self.location == True:
