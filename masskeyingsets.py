@@ -240,7 +240,16 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 							if bone.lock_rotation[2] == False:
 								ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.rotation_euler', index=2)
 				if self.scale == True:
-					ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.scale', index=-1)
+					if bone.lock_scale[0] == False and bone.lock_scale[1] == False and bone.lock_scale[2] == False:
+						ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.scale', index=-1)
+					else:
+						if bone.lock_scale[0] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.scale', index=0)
+						if bone.lock_scale[1] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.scale', index=1)
+						if bone.lock_scale[2] == False:
+							ksp = ks.paths.add(bone.id_data, bone.path_from_id() + '.scale', index=2)
+
 				if self.bone_custom_props == True:
 					for prop in bone.keys():
 						if prop != "_RNA_UI":
