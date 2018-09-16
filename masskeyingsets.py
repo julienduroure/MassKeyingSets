@@ -27,10 +27,9 @@
 bl_info = {
 	"name": "Mass KeyingSets",
 	"author": "Julien Duroure",
-	"version": (0, 1, 0),
-	"blender": (2, 77, 0),
+	"version": (0, 2, 0),
+	"blender": (2, 79, 0),
 	"location": "Scene properties",
-	"warning": "Beta version",
 	"description": "Mass KeyingSets creation from Selection",
 	"wiki_url": "http://blerifa.com/tools/MassKeyingSets/",
 	"tracker_url": "https://github.com/julienduroure/MassKeyingSets/issues/",
