@@ -81,8 +81,7 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 
 	@classmethod
 	def poll(self, context):
-		return check_case(context)[0] == True and check_case(context)[1] == "BONES"
-		#TODO: remove last check when OBJ will be implemented
+		return check_case(context)[0] == True
 
 
 	def execute(self, context):
@@ -162,7 +161,79 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 
 				# TODO custom props
 		elif check_case(context)[1] == "OBJ":
-			pass #TODO
+			scene = bpy.context.scene
+
+			if self.update == False:
+				ks = scene.keying_sets.new(idname="KeyingSet", name=self.name)
+				ks.bl_description = ""
+			else:
+				if self.name not in scene.keying_sets.keys():
+					self.report({'WARNING'}, "KeyingSet not exists!")
+					return {'CANCELLED'}
+				ks = scene.keying_sets[self.name]
+
+			transformation_index = {}
+			for obj in bpy.context.selected_objects:
+				print("##")
+				if obj.type == "ARMATURE":
+					continue
+
+				if not obj.animation_data:
+					continue
+				if not obj.animation_data.action:
+					continue
+				curves = obj.animation_data.action.fcurves
+
+				if obj.name not in transformation_index.keys():
+					transformation_index[obj.name] = {}
+
+				for curve in curves:
+					print(curve.data_path)
+					transformation = curve.data_path
+					if transformation not in transformation_index[obj.name].keys():
+						transformation_index[obj.name][transformation] = []
+					transformation_index[obj.name][transformation].append(curve.array_index)
+
+			print(transformation_index)
+
+			for obj_name in transformation_index.keys():
+				for transformation in transformation_index[obj_name].keys():
+
+					if transformation == "location":
+						if len(transformation_index[obj_name][transformation]) == 3:
+							ksp = ks.paths.add(bpy.data.objects[obj_name], 'location', index=-1)
+						else:
+							for idx in transformation_index[obj_name][transformation]:
+								ksp = ks.paths.add(bpy.data.objects[obj_name], 'location', index=idx)
+
+					elif transformation == "rotation_quaternion":
+						if len(transformation_index[obj_name][transformation]) == 4:
+							ksp = ks.paths.add(bpy.data.objects[obj_name], 'rotation_quaternion', index=-1)
+						else:
+							for idx in transformation_index[obj_name][transformation]:
+								ksp = ks.paths.add(bpy.data.objects[obj_name], 'rotation_quaternion', index=idx)
+
+					elif transformation == "rotation_angle":
+						if len(transformation_index[obj_name][transformation]) == 4:
+							ksp = ks.paths.add(bpy.data.objects[obj_name], 'rotation_angle', index=-1)
+						else:
+							for idx in transformation_index[obj_name][transformation]:
+								ksp = ks.paths.add(bpy.data.objects[obj_name], 'rotation_angle', index=idx)
+
+					elif transformation == "rotation_euler":
+						if len(transformation_index[obj_name][transformation]) == 3:
+							ksp = ks.paths.add(bpy.data.objects[obj_name], 'rotation_euler', index=-1)
+						else:
+							for idx in transformation_index[obj_name][transformation]:
+								ksp = ks.paths.add(bpy.data.objects[obj_name], 'rotation_euler', index=idx)
+
+					elif transformation == "scale":
+						if len(transformation_index[obj_name][transformation]) == 3:
+							ksp = ks.paths.add(bpy.data.objects[obj_name], 'scale', index=-1)
+						else:
+							for idx in transformation_index[obj_name][transformation]:
+								ksp = ks.paths.add(bpy.data.objects[obj_name], 'scale', index=idx)
+
 
 		return {'FINISHED'}
 
