@@ -158,8 +158,11 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 							for idx in transformation_index[bone_name][transformation]:
 								ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.scale', index=idx)
 
+					else:
+						# custom prop
+						ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, "pose." + transformation, index=-1)
 
-				# TODO custom props
+
 		elif check_case(context)[1] == "OBJ":
 			scene = bpy.context.scene
 
