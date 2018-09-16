@@ -87,7 +87,6 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 
 	def execute(self, context):
 		if check_case(context)[1] == "BONES":
-			#TODO: implement index of transformation if not all keyed
 			scene = bpy.context.scene
 
 			if self.update == False:
@@ -105,7 +104,7 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 				return {'FINISHED'}
 			curves = context.active_object.animation_data.action.fcurves
 
-			already_dones = {}
+			transformation_index = {}
 			for curve in curves:
 				if not curve.data_path[:11] == "pose.bones[":
 					continue
@@ -114,14 +113,52 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 					continue
 				transformation = curve.data_path.split(".")[len(curve.data_path.split("."))-1]
 
-				if transformation == "location":
-					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.location', index=-1)
-				elif transformation == "rotation_quaternion":
-					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_quaternion', index=-1)
-				elif transformation == "rotation_angle":
-					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_angle', index=-1)
-				elif transformation == "rotation_euler":
-					ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_euler', index=-1)
+				if bone_name not in transformation_index.keys():
+					transformation_index[bone_name] = {}
+
+				if transformation not in transformation_index[bone_name].keys():
+					transformation_index[bone_name][transformation] = []
+				transformation_index[bone_name][transformation].append(curve.array_index)
+
+
+			for bone_name in transformation_index.keys():
+				for transformation in transformation_index[bone_name].keys():
+
+					if transformation == "location":
+						if len(transformation_index[bone_name][transformation]) == 3:
+							ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.location', index=-1)
+						else:
+							for idx in transformation_index[bone_name][transformation]:
+								ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.location', index=idx)
+
+					elif transformation == "rotation_quaternion":
+						if len(transformation_index[bone_name][transformation]) == 4:
+							ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_quaternion', index=-1)
+						else:
+							for idx in transformation_index[bone_name][transformation]:
+								ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_quaternion', index=idx)
+
+					elif transformation == "rotation_angle":
+						if len(transformation_index[bone_name][transformation]) == 4:
+							ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_angle', index=-1)
+						else:
+							for idx in transformation_index[bone_name][transformation]:
+								ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_angle', index=idx)
+
+					elif transformation == "rotation_euler":
+						if len(transformation_index[bone_name][transformation]) == 3:
+							ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_euler', index=-1)
+						else:
+							for idx in transformation_index[bone_name][transformation]:
+								ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.rotation_euler', index=idx)
+
+					elif transformation == "scale":
+						if len(transformation_index[bone_name][transformation]) == 3:
+							ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.scale', index=-1)
+						else:
+							for idx in transformation_index[bone_name][transformation]:
+								ksp = ks.paths.add(context.active_object.pose.bones[bone_name].id_data, context.active_object.pose.bones[bone_name].path_from_id() + '.scale', index=idx)
+
 
 				# TODO custom props
 		elif check_case(context)[1] == "OBJ":
