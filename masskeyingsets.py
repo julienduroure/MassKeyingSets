@@ -75,8 +75,8 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 	bl_label = "MassKeyingSets from Keyframes"
 	bl_options = {'REGISTER'}
 
-	name = bpy.props.StringProperty(name="",default="MassKeyingSets")
-	update   = bpy.props.BoolProperty(default=False)
+	name: bpy.props.StringProperty(name="",default="MassKeyingSets")
+	update: bpy.props.BoolProperty(default=False)
 
 	@classmethod
 	def poll(self, context):
@@ -245,16 +245,16 @@ class POSE_OT_juks_keying_from_selected(bpy.types.Operator):
 	bl_label = "MassKeyingSets"
 	bl_options = {'REGISTER'}
 
-	name = bpy.props.StringProperty(name="",default="MassKeyingSets")
+	name: bpy.props.StringProperty(name="",default="MassKeyingSets")
 
-	update   = bpy.props.BoolProperty(default=False)
-	location = bpy.props.BoolProperty(default=True)
-	rotation = bpy.props.BoolProperty(default=True)
-	scale    = bpy.props.BoolProperty(default=False)
-	bone_custom_props = bpy.props.BoolProperty(name="Bone Custom Properties", default=False)
-	obj_custom_props  = bpy.props.BoolProperty(name="Object Custom Properties", default=False)
-	data_custom_props  = bpy.props.BoolProperty(name="Object Data Custom Properties", default=False)
-	only_non_locked = bpy.props.BoolProperty(name="Do not key locked channels", default=True)
+	update: bpy.props.BoolProperty(default=False)
+	location: bpy.props.BoolProperty(default=True)
+	rotation: bpy.props.BoolProperty(default=True)
+	scale: bpy.props.BoolProperty(default=False)
+	bone_custom_props: bpy.props.BoolProperty(name="Bone Custom Properties", default=False)
+	obj_custom_props: bpy.props.BoolProperty(name="Object Custom Properties", default=False)
+	data_custom_props: bpy.props.BoolProperty(name="Object Data Custom Properties", default=False)
+	only_non_locked: bpy.props.BoolProperty(name="Do not key locked channels", default=True)
 
 	@classmethod
 	def poll(self, context):
