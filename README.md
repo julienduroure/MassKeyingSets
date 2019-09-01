@@ -5,7 +5,7 @@ MassKeyingSets can mass create KeyingSets for objects or Bones
 ![MassKeyingSets](doc/popup_bones.png)
 
 # Version
-Cet addon fonctionne avec la version 2.8x de Blender. Une branche est disponible pour la version 2.7x
+This addon is a 2.8x version. A branch can be found for 2.7x version
 
 # More info ...
 ... On [BleRiFa](http://blerifa.com/tools/MassKeyingSets/) website
