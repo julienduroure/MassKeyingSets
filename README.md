@@ -1,3 +1,5 @@
+# This is the branch for 2.7x version on the addon
+
 # Features
 
 MassKeyingSets can mass create KeyingSets for objects or Bones  
