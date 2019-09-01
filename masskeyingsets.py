@@ -27,8 +27,8 @@
 bl_info = {
 	"name": "Mass KeyingSets",
 	"author": "Julien Duroure",
-	"version": (0, 2, 0),
-	"blender": (2, 79, 0),
+	"version": (0, 2, 1),
+	"blender": (2, 80, 0),
 	"location": "Scene properties",
 	"description": "Mass KeyingSets creation from Selection",
 	"wiki_url": "http://blerifa.com/tools/MassKeyingSets/",
@@ -176,7 +176,6 @@ class POSE_OT_juks_keying_from_keyframes(bpy.types.Operator):
 
 			transformation_index = {}
 			for obj in bpy.context.selected_objects:
-				print("##")
 				if obj.type == "ARMATURE":
 					continue
 
